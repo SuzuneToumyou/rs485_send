@@ -64,8 +64,8 @@ def senser_get(ser):
 if __name__ == "__main__":
 
     return_data = senser_get(ser_v)
-    if return_data != 0:
+    if return_data == 0:
         num = 0
-        while return_data != 0 or num <= 3:
+        while return_data == 0 or num <= 3:
             return_data = senser_get(ser_v)
             num = num + 1
