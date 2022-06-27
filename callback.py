@@ -76,9 +76,9 @@ while True:
             elif(tmp==4 and recv_data == ccrc):
                 tmp=0
                 return_data = send_data.senser_get(ser)
-                if return_data != 0:
+                if return_data == 0:
                     num = 0
-                    while return_data != 0 or num <= 3:
+                    while return_data == 0 or num <= 3:
                         return_data = send_data.senser_get(ser)
                         num = num + 1
 
