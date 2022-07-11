@@ -7,6 +7,8 @@ import time
 
 ser_v = serial.Serial('/dev/ttyUSB0', 19200, timeout=None)
 
+stop_times = 0.77
+
 def senser_get(ser):
 
     d_ed = "big"
@@ -20,9 +22,9 @@ def senser_get(ser):
     try:
         h = pi.i2c_open(1,addr)
         pi.i2c_write_device(h, [0x4d])
-        time.sleep(1)
+        time.sleep(stop_times)
         count, result = pi.i2c_read_device(h,2051)
-        time.sleep(1)
+        time.sleep(stop_times)
         pi.i2c_close(h)
     except:
         count = -80
