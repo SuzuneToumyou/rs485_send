@@ -3,7 +3,6 @@
 
 import serial
 import time
-
 ser_v = serial.Serial('/dev/ttyUSB0', 19200, timeout=None)
 
 stop_times = 0.77
