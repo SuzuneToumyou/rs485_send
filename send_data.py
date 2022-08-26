@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*
 
-import pigpio
 import serial
 import time
 
@@ -9,14 +8,13 @@ ser_v = serial.Serial('/dev/ttyUSB0', 19200, timeout=None)
 
 stop_times = 0.77
 
-def senser_get(ser):
+def senser_get(ser,pi):
 
     d_ed = "big"
 
     s_code = b'\x02'
     s_ID = b'\x00'
-
-    pi = pigpio.pi()
+    
     addr = 0x0a
 
     try:
