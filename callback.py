@@ -4,7 +4,7 @@
 import serial
 import struct
 import send_data
-
+import pigpio
 import binascii
 
 def reflect_data(x, width):
@@ -54,6 +54,8 @@ crc = crc_poly(data2, 8, 0x85)
 ccrc = binascii.unhexlify(format(crc,'x'))
 #print (ccrc)
 
+pi=pigpio.pi()
+
 while True:
       if ser.in_waiting > 0:
             recv_data = ser.read(1)
@@ -74,15 +76,17 @@ while True:
                 print("sent packet!:" + recv_data.hex())
 
             elif(tmp==4 and recv_data == ccrc):
-                tmp=0
-                return_data = send_data.senser_get(ser)
+                tmp=5
+                return_data = send_data.senser_get(ser,pi)
+                print("call sub")
                 if return_data == 0:
                     num = 0
                     while return_data == 0 or num <= 3:
-                        return_data = send_data.senser_get(ser)
+                        return_data = send_data.senser_get(ser,pi)
                         num = num + 1
 
-            elif(tmp==5 and recv_data==b'\x03'):
+            #elif(tmp==5 and recv_data==b'\x03'):
+            elif(tmp==5):
                 tmp=0
                 print("packet end!")
 
