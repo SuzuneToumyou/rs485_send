@@ -3,6 +3,10 @@
 
 import serial
 import time
+import pigpio
+
+pi2==pigpio.pi()
+
 ser_v = serial.Serial('/dev/ttyUSB0', 19200, timeout=None)
 
 stop_times = 0.77
@@ -62,9 +66,9 @@ def senser_get(ser,pi):
 
 if __name__ == "__main__":
 
-    return_data = senser_get(ser_v)
+    return_data = senser_get(ser_v,pi2)
     if return_data == 0:
         num = 0
         while return_data == 0 or num <= 3:
-            return_data = senser_get(ser_v)
+            return_data = senser_get(ser_v,pi2)
             num = num + 1
