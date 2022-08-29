@@ -76,7 +76,7 @@ while True:
                 print("sent packet!:" + recv_data.hex())
 
             elif(tmp==4 and recv_data == ccrc):
-                tmp=5
+                tmp=0
                 return_data = send_data.senser_get(ser,pi)
                 print("call sub")
                 if return_data == 0:
