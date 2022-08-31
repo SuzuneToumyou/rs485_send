@@ -7,6 +7,8 @@ import send_data
 import pigpio
 import binascii
 
+import time
+
 def reflect_data(x, width):
     if width == 8:
         x = ((x & 0x55) << 1) | ((x & 0xAA) >> 1)
@@ -60,36 +62,39 @@ while True:
       if ser.in_waiting > 0:
             recv_data = ser.read(1)
             if(tmp==0 and recv_data==b'\x02'):
-                tmp=1
                 print("packet start!")
+                tmp=1
 
             elif(tmp==1 and recv_data==s_code):
-                tmp=2
                 print("s_code OK:" + recv_data.hex())
+                tmp=2
 
             elif(tmp==2 and recv_data==s_ID):
-                tmp=3
                 print("s_ID OK:" + recv_data.hex())
+                tmp=3
 
             elif(tmp==3 and recv_data==s_com):
-                tmp=4
                 print("sent packet!:" + recv_data.hex())
+                tmp=4
 
             elif(tmp==4 and recv_data == ccrc):
-                tmp=0
                 return_data = send_data.senser_get(ser,pi)
                 print("call sub")
-                if return_data == 0:
+                if return_data == 0: #error
                     num = 0
-                    while return_data == 0 or num <= 3:
+                    while (return_data == 0 and num <= 10):
                         return_data = send_data.senser_get(ser,pi)
+                        print("call sub")
                         num = num + 1
+                        time.sleep(0.05)
+                tmp=5
 
             #elif(tmp==5 and recv_data==b'\x03'):
             elif(tmp==5):
-                tmp=0
                 print("packet end!")
+                tmp=0
 
             else :
-                tmp=0
+                print(tmp)
                 print("packet error")
+                tmp=0
