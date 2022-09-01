@@ -5,7 +5,7 @@ import serial
 import time
 import pigpio
 
-pi2==pigpio.pi()
+pi2 = pigpio.pi()
 
 ser_v = serial.Serial('/dev/ttyUSB0', 19200, timeout=None)
 
@@ -17,7 +17,6 @@ def senser_get(ser,pi):
 
     s_code = b'\x02'
     s_ID = b'\x00'
-    
     addr = 0x0a
 
     try:
